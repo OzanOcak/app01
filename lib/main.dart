@@ -8,36 +8,42 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.green),
-      home: MyHomePage(),
+      home: EmailApp(title:'Email App'),   
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+class EmailApp extends StatelessWidget {
 
-class _MyHomePageState extends State<MyHomePage> {
-  
-  int _counter = 0;
+  final title;
 
-  void increment()=> _counter++;
+  EmailApp({this.title});
+
+  var messages =[
+    'my titile',
+    'more title',
+    'a title',
+    'happy be',
+    'thing to think'
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('my app')),
+      appBar: AppBar(title: Text('$title')),
       body:Center(
-        child:Text("$_counter",style: TextStyle(fontSize: 18.0),),
-      ),
-      floatingActionButton:FloatingActionButton(
-        onPressed: (){
-          setState(() {
-            increment();
-          });
-        },
-        child: Icon(Icons.add),
+        child:ListView.separated(
+          itemCount: messages.length,
+          itemBuilder: (BuildContext context, int index){
+              return ListTile(
+                leading: CircleAvatar(child:Text("OO")),
+                title: Text(messages[index]),
+                isThreeLine: true,
+                subtitle: Text("another text is very very long that will not fit in one line which is pretty hard to get there but possible"),
+              );
+        }, 
+        separatorBuilder: (BuildContext context, int index) => Divider(),
+        ),
       ),
     );
   }
