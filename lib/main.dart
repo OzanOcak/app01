@@ -19,15 +19,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  
+  int _counter = 0;
+
+  void increment()=> _counter++;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('my app')),
       body:Center(
-        child:Text("ola",style: TextStyle(fontSize: 18.0),),
+        child:Text("$_counter",style: TextStyle(fontSize: 18.0),),
       ),
       floatingActionButton:FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          setState(() {
+            increment();
+          });
+        },
         child: Icon(Icons.add),
       ),
     );
