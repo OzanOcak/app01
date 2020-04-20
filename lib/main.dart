@@ -13,18 +13,37 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class EmailApp extends StatelessWidget {
+class EmailApp extends StatelessWidget {   // warning : all variables of statless widget must be immutable(final)
 
   final title;
 
   EmailApp({this.title});
 
-  var messages =[
-    'my titile',
-    'more title',
-    'a title',
-    'happy be',
-    'thing to think'
+  var  messages = [
+    {
+    "subject":"title one",
+    "body":"another text is very very long that will not fit in one line which is pretty hard to get there but possible"
+    },
+    {
+    "subject":"title two",
+    "body":"another text is very very long that will not fit in one line which is pretty hard to get there but possible"
+    },
+    {
+    "subject":"title three",
+    "body":"another text is very very long that will not fit in one line which is pretty hard to get there but possible"
+    },
+    {
+    "subject":"title four",
+    "body":"another text is very very long that will not fit in one line which is pretty hard to get there but possible"
+    },
+    {
+    "subject":"title five",
+    "body":"another text is very very long that will not fit in one line which is pretty hard to get there but possible"
+    },
+    {
+    "subject":"title six",
+    "body":"another text is very very long that will not fit in one line which is pretty hard to get there but possible"
+    }
   ];
 
   @override
@@ -35,11 +54,13 @@ class EmailApp extends StatelessWidget {
         child:ListView.separated(
           itemCount: messages.length,
           itemBuilder: (BuildContext context, int index){
+            var message = messages[index]; //get the map
+
               return ListTile(
                 leading: CircleAvatar(child:Text("OO")),
-                title: Text(messages[index]),
+                title: Text(message['subject']),
                 isThreeLine: true,
-                subtitle: Text("another text is very very long that will not fit in one line which is pretty hard to get there but possible"),
+                subtitle: Text(message['body']),
               );
         }, 
         separatorBuilder: (BuildContext context, int index) => Divider(),
