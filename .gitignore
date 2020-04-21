@@ -4,6 +4,8 @@
 *.pyc
 *.swp
 .DS_Store
+.lock
+.g.dart
 .atom/
 .buildlog/
 .history
@@ -29,6 +31,7 @@
 .pub-cache/
 .pub/
 /build/
+
 
 # Web related
 lib/generated_plugin_registrant.dart

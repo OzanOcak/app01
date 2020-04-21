@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
+import 'package:http/http.dart'as http;
+
+import 'Message.dart';
+
 
 class MessageList extends StatefulWidget {
   final String title;
@@ -16,11 +20,16 @@ class _MessageListState extends State<MessageList> {
  List<dynamic> messages =  const [];
 
  Future loadMessageList() async{
-    String content = await rootBundle.loadString('data/messages.json');
+    //String content = await rootBundle.loadString('data/messages.json');
+
+    http.Response response = await http.get('http://www.mocky.io/v2/5e9f81d32d00004a00cb7bec');
+    String content= response.body;
     List collection= json.decode(content);
+    List <Message> _messages = collection.map((json)=> Message.fromJson(json)).toList();
+
 
     setState(() {
-      messages = collection;
+      messages = _messages;
     });
  }
 
@@ -41,12 +50,12 @@ class _MessageListState extends State<MessageList> {
           var message=messages[index];
 
           return ListTile(
-            title: Text(message["subject"]),
+            title: Text(message.subject),
             leading:CircleAvatar(
               child:Text("PJ"),
             ),
             subtitle: Text(
-              message["body"],
+              message.body,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               ),
