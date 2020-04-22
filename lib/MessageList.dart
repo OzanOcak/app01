@@ -1,9 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-//import 'package:flutter/services.dart';
-import 'package:http/http.dart'as http;
-
 import 'Message.dart';
 
 
@@ -18,15 +13,12 @@ class MessageList extends StatefulWidget {
 
 class _MessageListState extends State<MessageList> {
  List<dynamic> messages =  const [];
+ bool isLoading = true;
+
 
  Future loadMessageList() async{
-    //String content = await rootBundle.loadString('data/messages.json');
 
-    http.Response response = await http.get('http://www.mocky.io/v2/5e9f81d32d00004a00cb7bec');
-    String content= response.body;
-    List collection= json.decode(content);
-    List <Message> _messages = collection.map((json)=> Message.fromJson(json)).toList();
-
+    List <Message> _messages = await Message.browse();
 
     setState(() {
       messages = _messages;
@@ -37,13 +29,15 @@ class _MessageListState extends State<MessageList> {
   void initState() {
     loadMessageList();
     super.initState();
+    isLoading=false;
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
-      body: ListView.separated(
+      body: isLoading ? Center(child: CircularProgressIndicator()) : ListView.separated(
         itemCount: messages.length,
         separatorBuilder: (BuildContext context, int index)=>Divider(),
         itemBuilder: (BuildContext context, int index) {
